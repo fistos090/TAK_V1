@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Admin Application</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- latest version of bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+        <link rel="stylesheet" type="text/css" href="../bootCSS/bootstrap.min.css" />
+
+        <link rel="stylesheet" type="text/css" href="../bootCSS/bootstrap.css" />
+
+        <!-- my styles window.location.reload(true)-->
+        <link rel="stylesheet" href="../css/web_styles.css" />
+        <script src="../js/angular.js"></script>
+        <script src="../js/angular-route.js"></script>
+
+        <script src="../js/ui-bootstrap.js"></script>
+        <script src="../js/ui-bootstrap-tpls.js"></script>
+        <script src="../js/AdminAppController.js"></script>
+        <script src="../js/AdminRouteProvider.js"></script>
+
+    </head>
+    <body >
+        <div class="container">
+
+            <nav class="navbar navbar-default" >
+                <div class="container-fluid" style="background-color:#dcdcdc ">
+                    <div class="navbar-header">
+                        <h3>Web Administrator UI</h3> 
+                        <p>This interface provide an administrator with basic operations.</p> 
+                    </div>
+                    <div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li style=" margin: 3%;" >
+                                <p > <span ng-if=" loginStatus !== null">{{loginStatus}}</span>
+                                    <span ng-if="loginStatus === null">Hi!</span></p>
+                            </li> 
+                            <li style="margin: 3%;" >
+                                <p><a ng-click="logout('/logout')" ng-if="loginStatus !== null">Logout</a></p>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+
+            <div >
+
+                <h3><u>ADMINISTRATOR OPERATIONS</u></h3>
+
+                <div style="background-color:#dcdcdc;min-height: 400px;width: 49%;float: left;">
+                    <div class="btn btn-primary" style="width: 100%;height: 40px;text-align: center;float: top;margin-bottom: 1%">
+                        PRODUCT PORTAL
+                    </div>
+                    <form ng-submit="addNewProduct(product)">
+
+                        <div style="background-color:#d4d4d4;height: 250px;width: 94%;padding: 1%;margin: 2%">
+                            <h4><b>New Product Details</b></h4>
+
+                            <div class="form-group">
+                                <input type="text" placeholder="Product Description/Name" ng-model="product.DESC" class="form-control col-md-10" />
+                            </div>
+                            <div class="form-group">
+                                <input type="number" placeholder="Product Price" ng-model="product.PRICE" class="form-control col-md-10" /> 
+                            </div>
+                            <div class="form-group">
+                                <input type="number" placeholder="Product Quantity" ng-model="product.QUANTITY" class="form-control col-md-10" /> 
+                            </div>
+
+                            <div class="form-group">
+                                <label>Select Category</label>
+
+                                <select ng-model="product.CATEGORY" class="form-control col-md-10" id="sel1">
+                                    <option>Cameras</option>
+                                    <option>Computers</option>
+                                    <option>Books</option>
+                                    <option>Sport</option>
+                                    <option>Music</option>
+                                </select>
+                            </div>
+                            <br/>
+                            <div class="form-group" style="margin-top: 1%;" >
+
+                                <input type="submit" class="btn btn-primary" value="ADD PRODUCT"/>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+                <div style="background-color:#dcdcdc;min-height: 400px;width: 50%;float: right;text-align: center;float: top;">
+                    <div class="btn btn-primary" style="width: 100%;height: 40px;;text-align: center;float: top;margin-bottom: 1%">
+                        ORDER PORTAL
+                    </div>
+
+                    <div style="background-color:#d4d4d4;min-height: 120px;width: 24%;padding: 1%;margin: 1%;float: left;">
+                        <div class="form-group" style="margin-top: 1%;" >
+                            <input type="submit" class="btn btn-primary" ng-click="viewOlders()" value="VIEW ORDERS"/>
+                        </div>
+                        <div class="form-group" style="margin-top: 1%;" >
+                            <input type="submit" class="btn btn-primary" ng-click="printInvoice()" value="PRINT INVOICE"/>
+                        </div>
+                    </div>
+                    <div  ng-show="displayOrders" style="background-color:#d4d4d4;min-height: 250px;width: 72%;padding: 1%;float: right">
+                        <h4><b>Order Details</b></h4>
+
+                        <div class="table-responsive ">
+                            <table class="table ">
+                                <thead>
+                                    <tr style="width: 100%;height: 35px;border: none;background-color: #1d78cb;">
+                                        
+                                        <td class="image">Order Number</td>
+                                        <td class="price">Number of Item</td>
+                                        <td class="quantity">Order Date</td>
+                                        <td class="total">Owner Number</td>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="order in orders" >
+                                        <td class="">
+                                            <p>{{order.id}}</p>
+                                        </td>
+                                        <td class="">
+                                            <p>{{order.lineProducts.length}}</p>
+                                        </td>
+                                        <td class="">
+                                            <p>{{order.clientOrderDate}}</p>
+                                        </td>
+                                        <td class="cart_price">
+                                            <p>{{order.userID}}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <br/><br/>
+        <div class="container">
+            <div style="float: end;background-color:#dcdcdc;min-height: 100px;border: solid #dcdcdc 1px;padding: 1%;">
+                <label><b>OPERATION STATUS</b></label><br/><br/>
+                <div class="alert alert-success" ng-show="success">
+                    <strong>Operation Successful!</strong><br/>
+                    <p>{{message}}</p>
+                </div>
+                <div class="alert alert-danger" ng-show="failure">
+                    <strong>Operation Failed!</strong><br/>
+                    <p>{{message}}</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

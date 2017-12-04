@@ -1,0 +1,24 @@
+<div style="width: 30%;margin: auto;margin-top: 10%;background: white;">
+    <form name="form.userForm" ng-submit="submitForm(input)" novalidate="">
+        <div class="modal-header">
+            <h4>Forgot Password</h4>
+        </div>
+        <div class="modal-body" >
+            <h5>{{modalMessage}}</h5>
+            <!-- EMAIL -->
+            <div class="form-group">
+                <label>Provide relevant data below :</label>
+                <input type="text" name="text" class="form-control" ng-model="input" required=""/>
+                
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" style="width: 49%;" class="btn btn-primary" >Submit</button>
+            <button class="btn btn-danger" style="width: 48%;" ng-click="cancel()" >Cancel</button>
+        </div>
+
+
+    </form>
+
+</div>

@@ -1,0 +1,335 @@
+<!DOCTYPE html >
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- newer version of bootstrap -->
+        <link rel="stylesheet" type="text/css" href="bootCSS/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="bootCSS/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="bootCSS/bootstrap-theme.css" />
+        <link rel="stylesheet" type="text/css" href="bootCSS/bootstrap.css" />
+
+        <!-- Old Version Of Bootstrap   -->
+        <link rel="stylesheet" href="css/meanmenu.min.css" />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/responsive.css" />
+        <link rel="stylesheet" href="css/setings.css" />
+
+        <!-- my styles -->
+        <link rel="stylesheet" href="css/web_styles.css" />
+
+
+
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+
+        <script src="js/angular.js"></script>
+        <script src="js/angular-route.js"></script>
+        <script src="js/angular-route-min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+
+    </head >
+    <body >
+        <nav class="navbar" style="margin-top: 1%;">
+            <div class="container">
+
+                <ul class="nav navbar-nav navbar-left">
+
+                    <a ng-click="goto('/');">
+                        <img src="images/logo.PNG" width="182" height="44" alt="logo"/>
+
+                    </a>
+
+                </ul >
+
+                <ul id="navLI" class="nav navbar-nav navbar-right" style="width:70%;">
+                    <li class="navLI">
+                        &nbsp;<button  ng-click="goto('/cart');" class="dropbtn " id="cartIcon" ><span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;{{cart.length}}</button>
+                    </li>
+                    <li class="smallLine " >
+                        <div class="dropdown">
+                            <button class="myAccountDropDown" >My Account<span class="caret"></span></button>
+                            <div class="dropdown-content">
+                                <a ng-click="manageAccount();" >Update My Account</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="smallLine">
+                        <p ><a  ng-if="loginStatus === null" ng-click="goto('/login');" >Login</a>
+                            <a ng-click="logout('/logout')" ng-if="loginStatus !== null">Logout</a></p>
+                    </li>
+                    <li class="smallLine ">
+                        <p > <span ng-if=" loginStatus !== null">{{loginStatus}}</span>
+                            <span ng-if="loginStatus === null">Hi!</span></p>
+                    </li>   
+                </ul>
+
+            </div>
+
+            <div class="blueLine">
+                <div class="container" >
+                    <div class="nav navbar-nav navbar-left">
+
+                        <div class="dropdown">
+                            <button  class="dropbtn" style=" height: 30px;width: 182px;background-color: black;color: white;font-size: 16px;border: none;">Shop By Category<span class="caret"></span></button>
+                            <div class="dropdown-content">
+                                <a ng-click="loadCategory('Cameras');">Cameras</a>
+                                <a ng-click="loadCategory('Computers');">Computers</a>
+                                <a ng-click="loadCategory('Cellphones');">Cell phones</a>
+                                <a ng-click="loadCategory('Books');">Books</a>
+                                <a ng-click="loadCategory('Sport');">Sport</a>
+                                <a ng-click="loadCategory('Music');">Music</a>
+                                <a ng-click="loadCategory('books');"><img src="images/dailydeals_flat.gif" width="175" height="25" alt="dailydeals_flat"/></a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right" style="width:80%;">
+                        <li style="width: 23%;margin-right: 0.5%;">
+                            <select class="form-control" id="sel1">
+                                <option>Search All Category</option>
+                                <option>Cameras</option>
+                                <option>Computers</option>
+                                <option>Books</option>
+                                <option>Sport</option>
+                                <option>Music</option>
+                            </select>
+                        </li>
+                        <li style="width: 75%;">
+                            <div class="input-group">
+
+                                <input style="width: 100%;" type="text" class="form-control" aria-describedby="search-query"/>
+                                <span class="input-group-addon" id="search-query"><span class="glyphicon glyphicon-search"></span></span>
+
+                            </div>
+                        </li>       
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <!--Body Content -->
+        <div class="container "> 
+
+            <div class="row" >
+                <div class="col-md-2 "></div>
+                <div class="col-md-3 sideBar">
+
+                    <input class="btn btn-primary sideBar_button" ng-click="updateView();" type="submit" value="Update My Profile" /><br/><br/>
+                    <input class=" btn btn-primary sideBar_button" ng-click="changeView();" type="submit" value="Change Password" />
+                </div>
+                <div class="col-md-7" >
+
+                    <div ng-if="isUpdate" >
+
+
+                        <form role="form" name="RegistrationForm"  ng-submit="updateUser()" >
+
+                            <div class="row tableRow" >
+                                <div class="col-md-3">First Name *</div>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" ng-model="inUser.firstname"   />
+                                </div>
+                            </div>
+                            <div class="row tableRow">
+                                <div class="col-md-3">Last Name *</div>
+                                <div class="col-md-10">
+                                    <input type="text" ng-model="inUser.lastname" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row tableRow">
+                                <div class="col-md-3">Email *</div>
+                                <div class="col-md-10">
+                                    <input type="email" id="email" ng-model="inUser.email" class="form-control" ng-required="true" />
+                                </div>
+                            </div>
+                            
+                            <div class="row tableRow">
+                                <div class="col-md-3">Cell Number *</div>
+                                <div class="col-md-10">
+                                    <input type="text" name="cellnumber" ng-style="cellStyle" ng-change="changeCellStyle()" ng-model="inUser.cellphonNumber" class="form-control"  required="true" ng-minlength="10" ng-maxlength="10"/>
+                                </div>
+                            </div>
+                            <div class="row tableRow">
+                                <div class="col-md-3">Security Question *</div>
+                                <div class="col-md-10">
+                                    <input type="text" ng-model="inUser.securityQuestuion" class="form-control" required="true" />
+                                </div>
+                            </div>
+                            <div class="row tableRow">
+                                <div class="col-md-3">Answer *</div>
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" ng-model="inUser.answer" required="true" />
+                                </div>
+                            </div>
+                            <div class="row tableRow">
+                                <div class="col-md-3">Gender *</div>
+                                <div class="col-md-10">
+                                    <select ng-model="inUser.gender"  style="width: 35%;">
+                                        <option ng-selected="true">----</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row tableRow">
+                                <div class="col-md-3">Birthday *</div>
+                                <div class="col-md-10">
+                                    <select ng-model="inUser.day" id="day" style="width: 20%;" >
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                        <option>25</option>
+                                        <option>26</option>
+                                        <option>27</option>
+                                        <option>28</option>
+                                        <option>29</option>
+                                        <option>30</option>
+                                        <option>31</option>
+                                    </select> <select ng-model="inUser.month"  id="month" style="width: 50%;" >
+
+                                        <option>January</option>
+                                        <option>February</option>
+                                        <option>March</option>
+                                        <option>April</option>
+                                        <option>May</option>
+                                        <option>June</option>
+                                        <option>July</option>
+                                        <option>August</option>
+                                        <option>September</option>
+                                        <option>October</option>
+                                        <option>November</option>
+                                        <option>December</option>
+                                    </select> <select ng-model="inUser.year"  id="year" style="width: 27%;" >
+
+                                        <option>2001</option>
+                                        <option>2000</option>
+                                        <option>1999</option>
+                                        <option>1998</option>
+                                        <option>1997</option>
+                                        <option>1996</option>
+                                        <option>1995</option>
+                                        <option>1994</option>
+                                        <option>1993</option>
+                                        <option>1992</option>
+                                        <option>1991</option>
+                                        <option>1990</option>
+                                        <option>1989</option>
+                                        <option>1988</option>
+                                        <option>1987</option>
+                                        <option>1986</option>
+                                        <option>1985</option>
+                                        <option>1984</option>
+                                        <option>1983</option>
+                                        <option>1982</option>
+                                        <option>1981</option>
+                                        <option>1980</option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="row tableRow">
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-primary">Update &nbsp;<span class=" glyphicon glyphicon-lock"></span></button>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="text"  ng-model="user.dateOfBirth" hidden="" />
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+                    <div ng-if="isChange" class="tableRow">
+
+                        <form ng-submit="changePassword()">
+                            <div class="form-group">
+                                <label >Old Password:</label>
+                                <input type="password" ng-model="inUser.oldPassword" class="form-control col-md-10" />
+                            </div>
+                            <div class="form-group">
+                                <label >New Password:</label>
+                                <input type="password" ng-model="inUser.newPassword" ng-style="passStyle" class="form-control" ng-change="changePassStyle()" /> 
+                            </div>
+                            <div class="form-group">
+                                <label >Retype New Password:</label>
+                                <input type="password" ng-model="inUser.reNewPassword" ng-style="passStyle" class="form-control" ng-change="changePassStyle()" /> 
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Change &nbsp;<span class=" glyphicon glyphicon-lock"></span></button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <br/><br/><br/>
+        <div class="container ">
+
+            <div class="footer">
+                <div class="left">
+                    <a href="#">Home</a>
+                    <span>|</span>
+                    <a href="#">Support</a>
+                    <span>|</span>
+                    <a href="#">My Account</a>
+                    <span>|</span>
+                    <a href="#">The Store</a>
+                    <span>|</span>
+                    <a href="#">Contact</a>
+
+                    <div class="right">
+                        &copy; 2017 Take A Lot Web Application.
+                        Design by <a href="#" target="_blank" title="Takealot Web Application">Sifiso</a>
+                    </div> 
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </body>
+</html>
